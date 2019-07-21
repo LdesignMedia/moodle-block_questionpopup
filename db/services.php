@@ -15,18 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Web service
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @package   moodle-block_questionpopup
+ * @package   block_questionpopup
  * @copyright 2019-07-21 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2019072101;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires = 2017111300;        // Requires this Moodle version 3.4.
-$plugin->component = 'block_questionpopup'; // Full name of the plugin (used for diagnostics).
-$plugin->release = '3.5.0';
-$plugin->maturity = MATURITY_BETA;
+$functions = [
+
+    'block_questionpopup_save_answer' => [
+        'classname' => 'block_questionpopup_external',
+        'methodname' => 'save_answer',
+        'classpath' => 'blocks/questionpopup/externallib.php',
+        'description' => 'Save question popup answer',
+        'type' => 'write',
+        'loginrequired' => true,
+        'ajax' => true,
+    ],
+];

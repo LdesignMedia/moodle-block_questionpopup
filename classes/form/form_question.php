@@ -15,65 +15,60 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Helper class
+ * Context question
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @package   moodle-block_questionpopup
+ * @package   block_questionpopup
  * @copyright 2019-07-21 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
 
-namespace block_questionpopup;
+namespace block_questionpopup\form;
+
 defined('MOODLE_INTERNAL') || die;
 
+global $CFG;
+require_once($CFG->libdir . '/formslib.php');
+
 /**
- * Class helper
+ * Class form_question
  *
- * @package   block_questionpopup
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
+ * @package   block_questionpopup
  * @copyright 2019-07-21 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  */
-class helper {
+class form_question extends \moodleform {
 
     /**
-     * We are in DEBUG mode display more info than general.
-     *
-     * @return bool
+     * Form definition. Abstract method - always override!
      */
-    public static function has_debugging_enabled() {
-        global $CFG;
+    protected function definition() {
+        $locals = get_string_manager()->get_list_of_translations();
 
-        // Check if the environment has debugging enabled.
-        return ($CFG->debug >= 32767 && $CFG->debugdisplay == 1);
+        array_walk($locals, [$this, 'add_local_question']);
+
+        $this->add_action_buttons(true, get_string('btn:submit', 'block_questionpopup'));
+
     }
 
     /**
-     * user_has_answered_question
+     * add_local_question
      *
-     * @param int $contextid
+     * @param $localheading
+     * @param $local
      *
-     * @return bool
-     * @throws \dml_exception
+     * @throws \coding_exception
      */
-    public static function user_has_answered_question(int $contextid) : bool {
-        global $DB , $USER;
+    public function add_local_question($localheading, $local) {
+        $mform = &$this->_form;
+        $mform->addElement('header', 'header_' . $local, $localheading);
 
-        // Don't show popup if there is no question connected.
-        if($DB->record_exists('block_questionpopup_answer', ['contextid' => $contextid , 'userid' => $USER->id]) === false){
-            return true;
-        }
-
-        return false;
+        $mform->addElement('text', 'question_' . $local, get_string('form:question', 'block_questionpopup'), [
+            'style' => 'width:100%',
+        ]);
+        $mform->setType('question_' . $local, PARAM_TEXT);
     }
 
-    /**
-     * @param int $contextid
-     *
-     * @return string
-     */
-    public static function get_question(int $contextid) : string {
-        return 'Get correct question by local active user';
-    }
 }

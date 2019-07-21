@@ -73,7 +73,7 @@ class block_questionpopup extends block_base {
      * @return array
      */
     public function applicable_formats() {
-        return ['course-view' => true,];
+        return ['all' => true,];
     }
 
     /**
@@ -100,8 +100,7 @@ class block_questionpopup extends block_base {
      * @throws moodle_exception
      */
     public function get_content() {
-
-        global $PAGE;
+        global $COURSE;
 
         if ($this->content !== null) {
             return $this->content;
@@ -109,27 +108,56 @@ class block_questionpopup extends block_base {
 
         if ((!isloggedin() ||
             isguestuser() ||
-            \block_questionpopup\helper::user_has_answered_question($this->instance->id) ||
             !has_capability('block/questionpopup:view', $this->context))) {
 
             return (object)['text' => ''];
         }
 
-        $PAGE->requires->strings_for_js([
-            'javascript:yes',
-            'javascript:no',
-            'javascript:set_title',
-        ], 'block_questionpopup');
+        $this->show_popup();
 
-        $PAGE->requires->js_call_amd('block_questionpopup/questionpopup', 'initialise', [
-            [
-                'debugjs' => \block_questionpopup\helper::has_debugging_enabled(),
-                'id' => $this->instance->id,
-            ],
-        ]);
-
-        $this->content = new stdClass();
+        $html = '';
+        if (has_capability('block/questionpopup:addinstance', $this->context)) {
+            $html .= html_writer::link(new moodle_url('/blocks/questionpopup/view.php', [
+                'contextid' => $this->context->id,
+                'courseid' => $COURSE->id,
+            ]), get_string('btn:edit_question', 'block_questionpopup'), [
+                'class' => 'btn btn-primary',
+            ]);
+            $html .= html_writer::link('#', get_string('btn:preview_question', 'block_questionpopup'), [
+                'class' => 'btn btn-primary preview-question mt-1',
+            ]);
+        }
+        $this->content = (object)[
+            'text' => $html,
+            'footer' => '',
+        ];
 
         return $this->content;
     }
+
+    /**
+     * Show question popup
+     *
+     * @throws dml_exception
+     */
+    protected function show_popup() {
+        global $PAGE, $DB, $USER;
+
+        $answer = $DB->get_record('block_questionpopup_answer', [
+            'userid' => $USER->id,
+            'contextid' => $this->context->id,
+        ]);
+
+        $PAGE->requires->strings_for_js(['js:popup_title'], 'block_questionpopup');
+        $PAGE->requires->js_call_amd('block_questionpopup/questionpopup', 'initialise', [
+            [
+                'debugjs' => \block_questionpopup\helper::has_debugging_enabled(),
+                'contextid' => $this->context->id,
+                'question' => \block_questionpopup\helper::get_question($this->context->id),
+                'answer' => $answer->answer ?? '',
+                'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id),
+            ],
+        ]);
+    }
+
 }

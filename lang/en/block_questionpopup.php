@@ -29,3 +29,19 @@ $string['description'] = 'Force a question popup to your student in a course.';
 
 $string['questionpopup:addinstance'] = 'Add a new block for course question popup';
 $string['questionpopup:myaddinstance'] = 'Add a new Block for user favourites to my moodle';
+
+// Header.
+$string['header:question'] = 'Question';
+
+// Form.
+$string['form:question'] = 'Question';
+
+
+// Javascript.
+$string['js:popup_title'] = 'Confirm dialog';
+
+
+// Button.
+$string['btn:edit_question'] = 'Edit question';
+$string['btn:preview_question'] = 'Preview';
+$string['btn:submit'] = 'Submit';

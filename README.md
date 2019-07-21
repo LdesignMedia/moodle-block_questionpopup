@@ -17,7 +17,10 @@ single question.
 @TODO
 
 ## List of features
-@TODO
+* Supports multilang.
+* Answer should always be given, popup can close otherwise.
+* Answer stored in database can be used in reports.
+* GDPR implementation.
 
 ## Installation
 

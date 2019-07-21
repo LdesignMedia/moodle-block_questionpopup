@@ -15,18 +15,44 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version information
+ * Show question edit form
  *
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  *
- * @package   moodle-block_questionpopup
+ * @package   block_questionpopup
  * @copyright 2019-07-21 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
  * @author    Luuk Verhoeven
  **/
+require_once('../../config.php');
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2019072101;        // The current plugin version (Date: YYYYMMDDXX).
-$plugin->requires = 2017111300;        // Requires this Moodle version 3.4.
-$plugin->component = 'block_questionpopup'; // Full name of the plugin (used for diagnostics).
-$plugin->release = '3.5.0';
-$plugin->maturity = MATURITY_BETA;
+$contextid = required_param('contextid', PARAM_INT);
+$courseid = required_param('courseid', PARAM_INT);
+
+$course = $DB->get_record('course', ['id' => $courseid]);
+require_login($course);
+
+$PAGE->set_url('/blocks/questionpopup/view.php', [
+    'courseid' => $courseid,
+    'contextid' => $contextid,
+]);
+$PAGE->set_title($course->fullname);
+$PAGE->set_heading($course->fullname);
+
+$form = new \block_questionpopup\form\form_question($PAGE->url);
+if ($form->is_cancelled()) {
+    redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
+}
+
+if (($data = $form->get_data()) != false) {
+    echo '<pre>';
+    print_r($data);
+    die(__FILE__);
+}
+
+echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('header:question', 'block_questionpopup'));
+
+echo $form->render();
+
+echo $OUTPUT->footer();

@@ -56,8 +56,8 @@ class form_question extends \moodleform {
     /**
      * add_local_question
      *
-     * @param $localheading
-     * @param $local
+     * @param string $localheading
+     * @param string $local
      *
      * @throws \coding_exception
      */

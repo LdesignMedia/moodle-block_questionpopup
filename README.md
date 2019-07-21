@@ -9,7 +9,7 @@ single question.
 * Min. required: Moodle 3.5.x
 * Supports PHP: 7.0 | 7.1 | 7.2 
 
-[![Build Status](https://travis-ci.org/MFreakNL/moodle-block_questionpopup.svg?branch=master)](https://travis-ci.org/MFreakNL/moodle-block_questionpopup)
+[![Build Status](https://travis-ci.org/MFreakNL/block_questionpopup.svg?branch=master)](https://travis-ci.org/MFreakNL/block_questionpopup)
 ![Moodle35](https://img.shields.io/badge/moodle-3.5-brightgreen.svg)
 ![PHP7.0](https://img.shields.io/badge/PHP-7.0-brightgreen.svg)
 

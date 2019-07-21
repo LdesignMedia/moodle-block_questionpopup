@@ -43,7 +43,7 @@ install:
   - moodle-plugin-ci install
 
 script:
-  - php moodle/local/moodlecheck/cli/moodlecheck.php --path=blocks/questionpopup--format=text
+  - php moodle/local/moodlecheck/cli/moodlecheck.php --path=blocks/questionpopup --format=text
   - moodle-plugin-ci phplint
   - moodle-plugin-ci phpcpd
   - moodle-plugin-ci phpmd

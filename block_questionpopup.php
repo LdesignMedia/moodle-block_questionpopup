@@ -73,7 +73,7 @@ class block_questionpopup extends block_base {
      * @return array
      */
     public function applicable_formats() {
-        return ['all' => true,];
+        return ['all' => true];
     }
 
     /**

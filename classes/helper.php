@@ -58,10 +58,19 @@ class helper {
      * @throws \dml_exception
      */
     public static function user_has_answered_question(int $contextid) : bool {
-        global $DB , $USER;
+        global $DB, $USER, $SESSION;
+
+        if (isset($SESSION->questionpopup[$contextid])) {
+            return true;
+        }
 
         // Don't show popup if there is no question connected.
-        if($DB->record_exists('block_questionpopup_answer', ['contextid' => $contextid , 'userid' => $USER->id]) === false){
+        if ($DB->record_exists('block_questionpopup_answer', [
+                'contextid' => $contextid,
+                'userid' => $USER->id,
+            ]) === false) {
+            $SESSION->questionpopup[$contextid] = true;
+
             return true;
         }
 
@@ -69,11 +78,29 @@ class helper {
     }
 
     /**
+     * get question for current local
+     *
      * @param int $contextid
      *
      * @return string
+     * @throws \dml_exception
+     * @throws \coding_exception
      */
     public static function get_question(int $contextid) : string {
-        return 'Get correct question by local active user';
+
+        global $DB;
+        $record = $DB->get_record('block_questionpopup', [
+            'contextid' => $contextid,
+        ]);
+
+        if ($record) {
+            $question = (array)unserialize($record->question);
+            $currentlanguage = current_language();
+
+            return $question['question_' . $currentlanguage] ?? get_string('error:no_question_configured',
+                    'block_questionpopup');
+        }
+
+        return get_string('error:no_question_configured', 'block_questionpopup');
     }
 }

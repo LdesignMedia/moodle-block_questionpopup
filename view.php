@@ -40,14 +40,35 @@ $PAGE->set_title($course->fullname);
 $PAGE->set_heading($course->fullname);
 
 $form = new \block_questionpopup\form\form_question($PAGE->url);
+$block_questionpopup = $DB->get_record('block_questionpopup', ['contextid' => $contextid]);
+
+if ($block_questionpopup) {
+    $form->set_data(unserialize($block_questionpopup->question));
+}
+
 if ($form->is_cancelled()) {
     redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
 }
 
 if (($data = $form->get_data()) != false) {
-    echo '<pre>';
-    print_r($data);
-    die(__FILE__);
+
+    if ($block_questionpopup) {
+        $DB->update_record('block_questionpopup', (object)[
+            'id' => $block_questionpopup->id,
+            'question' => serialize($data),
+        ]);
+        redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
+
+        return;
+    }
+
+    $DB->insert_record('block_questionpopup', (object)[
+        'contextid' => $contextid,
+        'question' => serialize($data),
+        'created_at' => time(),
+    ]);
+
+    redirect(new moodle_url('/course/view.php', ['id' => $courseid]));
 }
 
 echo $OUTPUT->header();

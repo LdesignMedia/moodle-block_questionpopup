@@ -15,16 +15,30 @@
     along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 }}
 {{!
-    @package block_questionpopup
-    @copyright 2019-07-21 Mfreak.nl | LdesignMedia.nl - Luuk Verhoeven
-    @author    Luuk Verhoeven
-}}
+     @template block_questionpopup/question
 
+    Classes required for JS:
+    * none
+
+    Data attributes required for JS:
+    * none
+
+    Context variables required for this template:
+    * question string
+    * answer string
+
+    Example context (json):
+    {
+        "question": 'Some question',
+        "answer": 'Some answer',
+    }
+}}
 <div>
     <form>
         <div class="form-group">
-            <label for="question">{{question}}</label>
-            <input class="form-control" type="text" name="question" value="{{answer}}" style="width: 100%"/>
+            <label for="question">{{question}}
+                <input class="form-control" type="text" name="question" value="{{answer}}" style="width: 100%"/>
+            </label>
         </div>
     </form>
 </div>

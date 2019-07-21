@@ -40,10 +40,10 @@ $PAGE->set_title($course->fullname);
 $PAGE->set_heading($course->fullname);
 
 $form = new \block_questionpopup\form\form_question($PAGE->url);
-$block_questionpopup = $DB->get_record('block_questionpopup', ['contextid' => $contextid]);
+$questionpopup = $DB->get_record('block_questionpopup', ['contextid' => $contextid]);
 
-if ($block_questionpopup) {
-    $form->set_data(unserialize($block_questionpopup->question));
+if ($questionpopup) {
+    $form->set_data(unserialize($questionpopup->question));
 }
 
 if ($form->is_cancelled()) {
@@ -52,9 +52,9 @@ if ($form->is_cancelled()) {
 
 if (($data = $form->get_data()) != false) {
 
-    if ($block_questionpopup) {
+    if ($questionpopup) {
         $DB->update_record('block_questionpopup', (object)[
-            'id' => $block_questionpopup->id,
+            'id' => $questionpopup->id,
             'question' => serialize($data),
         ]);
         redirect(new moodle_url('/course/view.php', ['id' => $courseid]));

@@ -29,6 +29,7 @@ $string['description'] = 'Force a question popup to your student in a course.';
 
 $string['questionpopup:addinstance'] = 'Add a new block for course question popup';
 $string['questionpopup:myaddinstance'] = 'Add a new Block for user favourites to my moodle';
+$string['questionpopup:view'] = 'Display question popup';
 
 // Header.
 $string['header:question'] = 'Question';

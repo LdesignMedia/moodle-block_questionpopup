@@ -68,7 +68,7 @@ class helper {
         if ($DB->record_exists('block_questionpopup_answer', [
                 'contextid' => $contextid,
                 'userid' => $USER->id,
-            ]) === false) {
+            ]) === true) {
             $SESSION->questionpopup[$contextid] = true;
 
             return true;

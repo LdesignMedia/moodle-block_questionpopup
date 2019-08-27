@@ -109,7 +109,6 @@ class block_questionpopup extends block_base {
         if ((!isloggedin() ||
             isguestuser() ||
             !has_capability('block/questionpopup:view', $this->context))) {
-
             return (object)['text' => ''];
         }
 
@@ -139,6 +138,7 @@ class block_questionpopup extends block_base {
      * Show question popup
      *
      * @throws dml_exception
+     * @throws coding_exception
      */
     protected function show_popup() {
         global $PAGE, $DB, $USER;
@@ -155,7 +155,7 @@ class block_questionpopup extends block_base {
                 'contextid' => $this->context->id,
                 'question' => \block_questionpopup\helper::get_question($this->context->id),
                 'answer' => $answer->answer ?? '',
-                'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id),
+                'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id) ? false : true,
             ],
         ]);
     }

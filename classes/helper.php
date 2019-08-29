@@ -86,7 +86,7 @@ class helper {
      * @throws \dml_exception
      * @throws \coding_exception
      */
-    public static function get_question(int $contextid) : string {
+    public static function get_question(int $contextid)  {
 
         global $DB;
         $record = $DB->get_record('block_questionpopup', [
@@ -97,10 +97,9 @@ class helper {
             $question = (array)unserialize($record->question);
             $currentlanguage = current_language();
 
-            return $question['question_' . $currentlanguage] ?? get_string('error:no_question_configured',
-                    'block_questionpopup');
+            return $question['question_' . $currentlanguage] ?? false;
         }
 
-        return get_string('error:no_question_configured', 'block_questionpopup');
+        return false;
     }
 }

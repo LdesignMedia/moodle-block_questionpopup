@@ -148,12 +148,17 @@ class block_questionpopup extends block_base {
             'contextid' => $this->context->id,
         ]);
 
+        $question = \block_questionpopup\helper::get_question($this->context->id);
+        if(empty($question)){
+            return;
+        }
+
         $PAGE->requires->strings_for_js(['js:popup_title'], 'block_questionpopup');
         $PAGE->requires->js_call_amd('block_questionpopup/questionpopup', 'initialise', [
             [
                 'debugjs' => \block_questionpopup\helper::has_debugging_enabled(),
                 'contextid' => $this->context->id,
-                'question' => \block_questionpopup\helper::get_question($this->context->id),
+                'question' => $question,
                 'answer' => $answer->answer ?? '',
                 'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id) ? false : true,
             ],

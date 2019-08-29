@@ -41,6 +41,9 @@ $string['form:question'] = 'Question';
 // Javascript.
 $string['js:popup_title'] = 'Confirm dialog';
 
+// Error.
+$string['error:no_question_configured'] = 'No question added.';
+
 
 // Button.
 $string['btn:edit_question'] = 'Edit question';

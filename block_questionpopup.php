@@ -147,7 +147,7 @@ class block_questionpopup extends block_base {
         ]);
 
         $questions = \block_questionpopup\helper::get_questions($this->context->id);
-        if(empty($questions)){
+        if (empty($questions)) {
             return;
         }
 
@@ -158,7 +158,7 @@ class block_questionpopup extends block_base {
                 'contextid' => $this->context->id,
                 'questions' => $questions,
                 'locale' => current_language(),
-                'answers' => unserialize($answer->answer),
+                'answers' => !empty($answer->answer) ? unserialize($answer->answer) : [],
                 'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id) ? false : true,
             ],
         ]);

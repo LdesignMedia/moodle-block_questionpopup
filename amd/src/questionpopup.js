@@ -126,6 +126,7 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
 
             /**
              * Init popup
+             *
              * @param opts
              */
             init: function(opts) {

@@ -35,12 +35,19 @@ defined('MOODLE_INTERNAL') || die;
 class block_questionpopup extends block_base {
 
     /**
+     * @var context_course
+     */
+    private $course_context;
+
+    /**
      * Set the initial properties for the block
      *
      * @throws coding_exception
      */
     public function init() {
+        global $COURSE;
         $this->title = get_string('pluginname', 'block_questionpopup');
+        $this->course_context = context_course::instance($COURSE->id);
     }
 
     /**
@@ -143,7 +150,7 @@ class block_questionpopup extends block_base {
 
         $answer = $DB->get_record('block_questionpopup_answer', [
             'userid' => $USER->id,
-            'contextid' => $this->context->id,
+            'contextid' => $this->course_context->id,
         ]);
 
         $questions = \block_questionpopup\helper::get_questions($this->context->id);
@@ -155,11 +162,11 @@ class block_questionpopup extends block_base {
         $PAGE->requires->js_call_amd('block_questionpopup/questionpopup', 'initialise', [
             [
                 'debugjs' => \block_questionpopup\helper::has_debugging_enabled(),
-                'contextid' => $this->context->id,
+                'contextid' => $this->course_context->id,
                 'questions' => $questions,
                 'locale' => current_language(),
                 'answers' => !empty($answer->answer) ? unserialize($answer->answer) : [],
-                'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id) ? false : true,
+                'display' => \block_questionpopup\helper::user_has_answered_question($this->course_context->id) ? false : true,
             ],
         ]);
     }

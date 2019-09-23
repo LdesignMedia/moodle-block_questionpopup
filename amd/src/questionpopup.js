@@ -35,8 +35,9 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
         var opts = {
             debugjs: true,
             contextid: 0,
-            question: '',
-            answer: '',
+            questions: [],
+            locale: '',
+            answers: [],
             display: false
         };
 
@@ -58,8 +59,9 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
                         opts[key] = Number(options[key]);
                     } else if (vartype === 'string') {
                         opts[key] = String(options[key]);
+                    } else {
+                        opts[key] = options[key];
                     }
-                    // Skip all other types.
                 }
             }
         };
@@ -101,11 +103,11 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
          * @type {{init: init}}
          */
         var questionpopup = {
-            saveAnswer: function(answer) {
+            saveAnswer: function(data) {
                 var request = {
                     methodname: 'block_questionpopup_save_answer',
                     args: {
-                        'answer': answer,
+                        'answer': data,
                         'contextid': opts.contextid
                     }
                 };
@@ -127,6 +129,7 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
              * @param opts
              */
             init: function(opts) {
+                console.log(opts);
                 // Show modal.
                 ModalFactory.create({
                     title: M.util.get_string('js:popup_title', 'block_questionpopup'),
@@ -136,18 +139,8 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
 
                     // Handle send event.
                     modal.getRoot().on(ModalEvents.save, function(e) {
-                        var $el = $('input[name="question"]');
-                        var answer = $el.val().trim();
-                        if (answer.length === 0) {
-                            e.preventDefault();
-                            console.error('Question empty');
-
-                            // Show validation error when the answer is empty.
-                            $el.addClass('is-invalid');
-                            return;
-                        }
                         // Send the answer.
-                        questionpopup.saveAnswer(answer);
+                        questionpopup.saveAnswer($('form#question_popup').serialize());
                     });
 
                     // Handle hidden event.
@@ -192,7 +185,7 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
 
                 $.noConflict();
                 $(document).ready(function() {
-                    debug.log('Block Quesiton Popup v1.0');
+                    debug.log('Block Quesiton Popup v1.1');
                     questionpopup.init(opts);
                 });
             }

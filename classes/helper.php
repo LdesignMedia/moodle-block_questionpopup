@@ -61,20 +61,37 @@ class helper {
         global $DB, $USER, $SESSION;
 
         if (isset($SESSION->questionpopup[$contextid])) {
-            return true;
+             return true;
         }
 
-        // Don't show popup if there is no question connected.
-        if ($DB->record_exists('block_questionpopup_answer', [
-                'contextid' => $contextid,
-                'userid' => $USER->id,
-            ]) === true) {
+        $record = $DB->get_record('block_questionpopup_answer', [
+            'contextid' => $contextid,
+            'userid' => $USER->id,
+        ]);
+
+        if (!$record) {
+            return false;
+        }
+
+        $status = false;
+        $answers = unserialize($record->answer);
+        foreach($answers as $answer){
+
+            if(!empty($answer)){
+                $status = true;
+            }else{
+                $status = false;
+                break;
+            }
+        }
+
+        // Make sure all questions answered.
+        if($status){
             $SESSION->questionpopup[$contextid] = true;
-
-            return true;
         }
 
-        return false;
+
+        return $status;
     }
 
     /**
@@ -82,11 +99,11 @@ class helper {
      *
      * @param int $contextid
      *
-     * @return string
+     * @return array|false
      * @throws \dml_exception
      * @throws \coding_exception
      */
-    public static function get_question(int $contextid)  {
+    public static function get_questions(int $contextid) {
 
         global $DB;
         $record = $DB->get_record('block_questionpopup', [
@@ -94,10 +111,13 @@ class helper {
         ]);
 
         if ($record) {
-            $question = (array)unserialize($record->question);
+            $questions = (array)unserialize($record->question);
             $currentlanguage = current_language();
 
-            return $question['question_' . $currentlanguage] ?? false;
+            return (object)[
+                'first' => $questions['question_1_' . $currentlanguage] ?? '',
+                'second' => $questions['question_2_' . $currentlanguage] ?? '',
+            ];
         }
 
         return false;

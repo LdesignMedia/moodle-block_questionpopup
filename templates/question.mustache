@@ -35,10 +35,15 @@
     }
 }}
 <div>
-    <form>
+    <form id="question_popup">
         <div class="form-group">
-            <label for="question">{{question}}
-                <input class="form-control" type="text" id="question" name="question" value="{{answer}}" style="width: 100%"/>
+            <label for="question">{{questions.first}}
+                <input class="form-control" type="text" required id="question_1" name="question_1" value="{{answers.question_1}}" style="width: 100%"/>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="question">{{questions.second}}
+                <input class="form-control" type="text" required id="question_2" name="question_2" value="{{answers.question_2}}" style="width: 100%"/>
             </label>
         </div>
     </form>

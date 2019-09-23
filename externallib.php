@@ -54,7 +54,8 @@ class block_questionpopup_external extends external_api {
      */
     public function save_answer(int $contextid, string $answer) {
         global $USER, $DB;
-
+        $answerdata = [];
+        parse_str($answer , $answerdata);
         require_capability('block/questionpopup:view', context::instance_by_id($contextid), $USER);
 
         $params = [
@@ -67,12 +68,12 @@ class block_questionpopup_external extends external_api {
         if ($row) {
             $DB->update_record('block_questionpopup_answer', (object)[
                 'id' => $row->id,
-                'answer' => $answer,
+                'answer' => serialize((object)$answerdata),
             ]);
         } else {
 
             $DB->insert_record('block_questionpopup_answer', (object)[
-                'answer' => $answer,
+                'answer' => serialize((object)$answerdata),
                 'userid' => $USER->id,
                 'contextid' => $contextid,
                 'created_at' => time(),
@@ -93,7 +94,7 @@ class block_questionpopup_external extends external_api {
         return new external_function_parameters (
             [
                 'contextid' => new external_value(PARAM_INT, 'Context id', VALUE_REQUIRED),
-                'answer' => new external_value(PARAM_TEXT, 'The user there answer', VALUE_REQUIRED),
+                'answer' => new external_value(PARAM_RAW, 'The user there answer', VALUE_REQUIRED),
             ]
         );
     }

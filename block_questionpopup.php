@@ -122,10 +122,8 @@ class block_questionpopup extends block_base {
             ]), get_string('btn:edit_question', 'block_questionpopup'), [
                 'class' => 'btn btn-primary',
             ]);
-            $html .= html_writer::link('#', get_string('btn:preview_question', 'block_questionpopup'), [
-                'class' => 'btn btn-primary preview-question mt-1',
-            ]);
         }
+
         $this->content = (object)[
             'text' => $html,
             'footer' => '',
@@ -148,8 +146,8 @@ class block_questionpopup extends block_base {
             'contextid' => $this->context->id,
         ]);
 
-        $question = \block_questionpopup\helper::get_question($this->context->id);
-        if(empty($question)){
+        $questions = \block_questionpopup\helper::get_questions($this->context->id);
+        if(empty($questions)){
             return;
         }
 
@@ -158,8 +156,9 @@ class block_questionpopup extends block_base {
             [
                 'debugjs' => \block_questionpopup\helper::has_debugging_enabled(),
                 'contextid' => $this->context->id,
-                'question' => $question,
-                'answer' => $answer->answer ?? '',
+                'questions' => $questions,
+                'locale' => current_language(),
+                'answers' => unserialize($answer->answer),
                 'display' => \block_questionpopup\helper::user_has_answered_question($this->context->id) ? false : true,
             ],
         ]);

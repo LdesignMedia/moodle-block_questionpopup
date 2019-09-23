@@ -47,7 +47,8 @@ class form_question extends \moodleform {
     protected function definition() {
         $locals = get_string_manager()->get_list_of_translations();
 
-        array_walk($locals, [$this, 'add_local_question']);
+        array_walk($locals, [$this, 'add_local_question'], 1);
+        array_walk($locals, [$this, 'add_local_question'], 2);
 
         $this->add_action_buttons(true, get_string('btn:submit', 'block_questionpopup'));
 
@@ -61,14 +62,17 @@ class form_question extends \moodleform {
      *
      * @throws \coding_exception
      */
-    public function add_local_question($localheading, $local) {
+    public function add_local_question($localheading, $local, int $questionnumber = 0) {
+
+
         $mform = &$this->_form;
         $mform->addElement('header', 'header_' . $local, $localheading);
 
-        $mform->addElement('text', 'question_' . $local, get_string('form:question', 'block_questionpopup'), [
+        $name = 'question_' . $questionnumber . '_' . $local;
+        $mform->addElement('text', $name, get_string('form:question', 'block_questionpopup') . ' - ' . $questionnumber, [
             'style' => 'width:100%',
         ]);
-        $mform->setType('question_' . $local, PARAM_TEXT);
+        $mform->setType($name, PARAM_TEXT);
     }
 
 }

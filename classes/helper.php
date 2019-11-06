@@ -99,7 +99,7 @@ class helper {
      *
      * @param int $contextid
      *
-     * @return array|false
+     * @return \stdClass|false
      * @throws \dml_exception
      * @throws \coding_exception
      */
@@ -117,6 +117,7 @@ class helper {
             return (object)[
                 'first' => $questions['question_1_' . $currentlanguage] ?? '',
                 'second' => $questions['question_2_' . $currentlanguage] ?? '',
+                'third' => $questions['question_3_' . $currentlanguage] ?? '',
             ];
         }
 

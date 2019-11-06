@@ -49,6 +49,7 @@ class form_question extends \moodleform {
 
         array_walk($locals, [$this, 'add_local_question'], 1);
         array_walk($locals, [$this, 'add_local_question'], 2);
+        array_walk($locals, [$this, 'add_local_question'], 3);
 
         $this->add_action_buttons(true, get_string('btn:submit', 'block_questionpopup'));
 
@@ -59,6 +60,8 @@ class form_question extends \moodleform {
      *
      * @param string $localheading
      * @param string $local
+     *
+     * @param int    $questionnumber
      *
      * @throws \coding_exception
      */

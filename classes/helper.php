@@ -61,7 +61,7 @@ class helper {
         global $DB, $USER, $SESSION;
 
         if (isset($SESSION->questionpopup[$contextid])) {
-             return true;
+            return true;
         }
 
         $record = $DB->get_record('block_questionpopup_answer', [
@@ -75,21 +75,20 @@ class helper {
 
         $status = false;
         $answers = unserialize($record->answer);
-        foreach($answers as $answer){
+        foreach ($answers as $answer) {
 
-            if(!empty($answer)){
+            if (!empty($answer)) {
                 $status = true;
-            }else{
+            } else {
                 $status = false;
                 break;
             }
         }
 
         // Make sure all questions answered.
-        if($status){
+        if ($status) {
             $SESSION->questionpopup[$contextid] = true;
         }
-
 
         return $status;
     }
@@ -116,11 +115,11 @@ class helper {
 
             return (object)[
                 'first' => $questions['question_1_' . $currentlanguage] ?? '',
-                'first_maxlength' => $questions['maxlength_question_1'] ?? '',
+                'first_maxlength' => !empty($questions['maxlength_question_1']) ? $questions['maxlength_question_1'] : 1000,
                 'second' => $questions['question_2_' . $currentlanguage] ?? '',
-                'second_maxlength' => $questions['maxlength_question_2'] ?? '',
+                'second_maxlength' => !empty($questions['maxlength_question_2']) ? $questions['maxlength_question_2'] : 1000,
                 'third' => $questions['question_3_' . $currentlanguage] ?? '',
-                'third_maxlength' => $questions['maxlength_question_3'] ?? '',
+                'third_maxlength' => !empty($questions['maxlength_question_3']) ? $questions['maxlength_question_3'] : 1000,
             ];
         }
 

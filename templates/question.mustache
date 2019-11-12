@@ -39,21 +39,21 @@
         {{#questions.first}}
             <div class="form-group">
                 <label for="question">{{questions.first}}
-                    <input class="form-control" type="text" required id="question_1" name="question_1" value="{{answers.question_1}}" style="width: 100%"/>
+                    <input class="form-control" maxlength="{{questions.first_maxlength}}" type="text" required id="question_1" name="question_1" value="{{answers.question_1}}" style="width: 100%"/>
                 </label>
             </div>
         {{/questions.first}}
         {{#questions.second}}
             <div class="form-group">
                 <label for="question">{{questions.second}}
-                    <input class="form-control" type="text" required id="question_2" name="question_2" value="{{answers.question_2}}" style="width: 100%"/>
+                    <input class="form-control" type="text" maxlength="{{questions.second_maxlength}}" required id="question_2" name="question_2" value="{{answers.question_2}}" style="width: 100%"/>
                 </label>
             </div>
         {{/questions.second}}
         {{#questions.third}}
             <div class="form-group">
                 <label for="question">{{questions.third}}
-                    <input class="form-control" type="text" required id="question_3" name="question_3" value="{{answers.question_3}}" style="width: 100%"/>
+                    <input class="form-control" type="text" maxlength="{{questions.third_maxlength}}" required id="question_3" name="question_3" value="{{answers.question_3}}" style="width: 100%"/>
                 </label>
             </div>
         {{/questions.third}}

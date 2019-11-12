@@ -46,3 +46,5 @@ Contributions are welcome and will be fully credited. We accept contributions vi
 ## Changelog
 
 See version control for the complete history. Major changes in this version will be listed below.
+
+2019111200 - Add max length

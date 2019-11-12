@@ -24,7 +24,7 @@
  **/
 
 /* eslint no-unused-expressions: "off", no-console:off, no-invalid-this:"off",no-script-url:"off", block-scoped-var: "off" */
-define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/notification', 'core/modal_events', 'core/ajax',],
+define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/notification', 'core/modal_events', 'core/ajax'],
     function($, ModalFactory, Templates, Str, Notification, ModalEvents, Ajax) {
 
         /**
@@ -98,9 +98,9 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
         };
 
         /**
-         * questionpopup
+         * Questionpopup
          *
-         * @type {{init: init}}
+         * @type {{saveAnswer: saveAnswer, init: init}}
          */
         var questionpopup = {
             saveAnswer: function(data) {
@@ -127,7 +127,7 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
             /**
              * Init popup
              *
-             * @param opts
+             * @param {object} opts
              */
             init: function(opts) {
                 console.log(opts);
@@ -139,7 +139,7 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
                 }, $('.preview-question')).then(function(modal) {
 
                     // Handle send event.
-                    modal.getRoot().on(ModalEvents.save, function(e) {
+                    modal.getRoot().on(ModalEvents.save, function() {
                         // Send the answer.
                         questionpopup.saveAnswer($('form#question_popup').serialize());
                     });
@@ -186,7 +186,7 @@ define(['jquery', 'core/modal_factory', 'core/templates', 'core/str', 'core/noti
 
                 $.noConflict();
                 $(document).ready(function() {
-                    debug.log('Block Quesiton Popup v1.1');
+                    debug.log('Block Quesiton Popup v1.2');
                     questionpopup.init(opts);
                 });
             }

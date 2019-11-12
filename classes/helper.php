@@ -116,8 +116,11 @@ class helper {
 
             return (object)[
                 'first' => $questions['question_1_' . $currentlanguage] ?? '',
+                'first_maxlength' => $questions['maxlength_question_1'] ?? '',
                 'second' => $questions['question_2_' . $currentlanguage] ?? '',
+                'second_maxlength' => $questions['maxlength_question_2'] ?? '',
                 'third' => $questions['question_3_' . $currentlanguage] ?? '',
+                'third_maxlength' => $questions['maxlength_question_3'] ?? '',
             ];
         }
 

@@ -45,14 +45,25 @@ class form_question extends \moodleform {
      * Form definition. Abstract method - always override!
      */
     protected function definition() {
+        $mform = &$this->_form;
         $locals = get_string_manager()->get_list_of_translations();
 
         array_walk($locals, [$this, 'add_local_question'], 1);
         array_walk($locals, [$this, 'add_local_question'], 2);
         array_walk($locals, [$this, 'add_local_question'], 3);
 
-        $this->add_action_buttons(true, get_string('btn:submit', 'block_questionpopup'));
+        $mform->addElement('header', 'header_maxlength', get_string('form:header_maxlength', 'block_questionpopup'));
 
+        $array = range(0, 250);
+
+        $mform->addElement('select', 'maxlength_question_1', '1 -' . get_string('form:maxlength_question', 'block_questionpopup'), $array);
+        $mform->setType('maxlength_question_1', PARAM_INT);
+        $mform->addElement('select', 'maxlength_question_2', '2 -' . get_string('form:maxlength_question', 'block_questionpopup'), $array);
+        $mform->setType('maxlength_question_2', PARAM_INT);
+        $mform->addElement('select', 'maxlength_question_3', '3 -' . get_string('form:maxlength_question', 'block_questionpopup'), $array);
+        $mform->setType('maxlength_question_3', PARAM_INT);
+
+        $this->add_action_buttons(true, get_string('btn:submit', 'block_questionpopup'));
     }
 
     /**
@@ -67,12 +78,11 @@ class form_question extends \moodleform {
      */
     public function add_local_question($localheading, $local, int $questionnumber = 0) {
 
-
         $mform = &$this->_form;
-        $mform->addElement('header', 'header_' . $local, $localheading);
+        $mform->addElement('header', 'header_' . $local, get_string('form:question', 'block_questionpopup') . ' - ' . $questionnumber . ' : ' . $localheading);
 
         $name = 'question_' . $questionnumber . '_' . $local;
-        $mform->addElement('text', $name, get_string('form:question', 'block_questionpopup') . ' - ' . $questionnumber, [
+        $mform->addElement('text', $name, get_string('form:question', 'block_questionpopup'), [
             'style' => 'width:100%',
         ]);
         $mform->setType($name, PARAM_TEXT);

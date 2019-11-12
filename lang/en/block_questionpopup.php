@@ -36,14 +36,14 @@ $string['header:question'] = 'Question';
 
 // Form.
 $string['form:question'] = 'Question';
-
+$string['form:header_maxlength'] = 'Maximum number of characters per question';
+$string['form:maxlength_question'] = 'Characters length (0 = no limit)';
 
 // Javascript.
 $string['js:popup_title'] = 'Confirm dialog';
 
 // Error.
 $string['error:no_question_configured'] = 'No question added.';
-
 
 // Button.
 $string['btn:edit_question'] = 'Edit question';

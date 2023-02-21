@@ -48,11 +48,8 @@ class block_questionpopup_external extends external_api {
      * @param string $answer
      *
      * @return array
-     * @throws coding_exception
-     * @throws required_capability_exception
-     * @throws dml_exception
      */
-    public function save_answer(int $contextid, string $answer) {
+    public static function save_answer(int $contextid, string $answer) {
         global $USER, $DB;
         $answerdata = [];
         parse_str($answer , $answerdata);
@@ -104,7 +101,7 @@ class block_questionpopup_external extends external_api {
      *
      * @return external_single_structure
      */
-    public function save_answer_returns() {
+    public static function save_answer_returns() {
 
         return new external_single_structure(
             [

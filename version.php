@@ -25,8 +25,8 @@
  **/
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version = 2023022100;        // The current plugin version (Date: YYYYMMDDXX).
+$plugin->version = 2024042400;        // The current plugin version (Date: YYYYMMDDXX).
 $plugin->requires = 2017111300;        // Requires this Moodle version 3.4.
 $plugin->component = 'block_questionpopup'; // Full name of the plugin (used for diagnostics).
-$plugin->release = '3.5.0';
+$plugin->release = '4.1.0';
 $plugin->maturity = MATURITY_BETA;

@@ -57,7 +57,7 @@ class helper {
      * @return bool
      * @throws \dml_exception
      */
-    public static function user_has_answered_question(int $contextid) : bool {
+    public static function user_has_answered_question(int $contextid): bool {
         global $DB, $USER, $SESSION;
 
         if (isset($SESSION->questionpopup[$contextid])) {
@@ -110,10 +110,10 @@ class helper {
         ]);
 
         if ($record) {
-            $questions = (array)unserialize($record->question);
+            $questions = (array) unserialize($record->question);
             $currentlanguage = current_language();
 
-            return (object)[
+            return (object) [
                 'first' => $questions['question_1_' . $currentlanguage] ?? '',
                 'first_maxlength' => !empty($questions['maxlength_question_1']) ? $questions['maxlength_question_1'] : 1000,
                 'second' => $questions['question_2_' . $currentlanguage] ?? '',
@@ -125,4 +125,5 @@ class helper {
 
         return false;
     }
+
 }

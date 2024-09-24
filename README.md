@@ -11,7 +11,9 @@ single question.
 
 [![Build Status](https://travis-ci.org/MFreakNL/block_questionpopup.svg?branch=master)](https://travis-ci.org/MFreakNL/block_questionpopup)
 ![Moodle35](https://img.shields.io/badge/moodle-3.5-brightgreen.svg)
+![Moodle41](https://img.shields.io/badge/moodle-4.1-brightgreen.svg)
 ![PHP7.0](https://img.shields.io/badge/PHP-7.0-brightgreen.svg)
+![PHP8.1](https://img.shields.io/badge/PHP-8.1-brightgreen.svg)
 
 ## Screens
 @TODO
@@ -48,3 +50,4 @@ Contributions are welcome and will be fully credited. We accept contributions vi
 See version control for the complete history. Major changes in this version will be listed below.
 
 2019111200 - Add max length
+2024042400 - Upgraded to moodle 4.1 and PHP 8.1

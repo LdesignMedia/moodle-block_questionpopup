@@ -72,7 +72,7 @@ class form_question extends \moodleform {
      * @param string $localheading
      * @param string $local
      *
-     * @param int    $questionnumber
+     * @param int $questionnumber
      *
      * @throws \coding_exception
      */

@@ -116,7 +116,7 @@ class block_questionpopup extends block_base {
         if ((!isloggedin() ||
             isguestuser() ||
             !has_capability('block/questionpopup:view', $this->context))) {
-            return (object)['text' => ''];
+            return (object) ['text' => ''];
         }
 
         $this->show_popup();
@@ -131,7 +131,7 @@ class block_questionpopup extends block_base {
             ]);
         }
 
-        $this->content = (object)[
+        $this->content = (object) [
             'text' => $html,
             'footer' => '',
         ];

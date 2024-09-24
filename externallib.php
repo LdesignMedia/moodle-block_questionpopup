@@ -44,7 +44,7 @@ class block_questionpopup_external extends external_api {
     /**
      * Save answer
      *
-     * @param int    $contextid
+     * @param int $contextid
      * @param string $answer
      *
      * @return array
@@ -52,7 +52,7 @@ class block_questionpopup_external extends external_api {
     public static function save_answer(int $contextid, string $answer) {
         global $USER, $DB;
         $answerdata = [];
-        parse_str($answer , $answerdata);
+        parse_str($answer, $answerdata);
         require_capability('block/questionpopup:view', context::instance_by_id($contextid), $USER);
 
         $params = [
@@ -63,14 +63,14 @@ class block_questionpopup_external extends external_api {
         $row = $DB->get_record('block_questionpopup_answer', $params);
 
         if ($row) {
-            $DB->update_record('block_questionpopup_answer', (object)[
+            $DB->update_record('block_questionpopup_answer', (object) [
                 'id' => $row->id,
-                'answer' => serialize((object)$answerdata),
+                'answer' => serialize((object) $answerdata),
             ]);
         } else {
 
-            $DB->insert_record('block_questionpopup_answer', (object)[
-                'answer' => serialize((object)$answerdata),
+            $DB->insert_record('block_questionpopup_answer', (object) [
+                'answer' => serialize((object) $answerdata),
                 'userid' => $USER->id,
                 'contextid' => $contextid,
                 'created_at' => time(),

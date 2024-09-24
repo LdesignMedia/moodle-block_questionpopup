@@ -53,7 +53,7 @@ if ($form->is_cancelled()) {
 if (($data = $form->get_data()) != false) {
 
     if ($questionpopup) {
-        $DB->update_record('block_questionpopup', (object)[
+        $DB->update_record('block_questionpopup', (object) [
             'id' => $questionpopup->id,
             'question' => serialize($data),
         ]);
@@ -62,7 +62,7 @@ if (($data = $form->get_data()) != false) {
         return;
     }
 
-    $DB->insert_record('block_questionpopup', (object)[
+    $DB->insert_record('block_questionpopup', (object) [
         'contextid' => $contextid,
         'question' => serialize($data),
         'created_at' => time(),
